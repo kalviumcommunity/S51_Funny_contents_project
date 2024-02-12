@@ -1,4 +1,4 @@
-FUNNY CONTENTS ACROSS THE INTERNET
+## FUNNY CONTENTS ACROSS THE INTERNET
 
 The idea of FUNNY CONTENTS ACROSS THE INTERNET is to create a source that gathers funny contents form other resources like youtube, reddit etc. which can be in the form of images, videos, gifs, etc. And provide them to the users for Freee.
 

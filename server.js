@@ -7,7 +7,7 @@ app.get('/ping', (req, res)=>{
     res.send("pong");
 });
 app.get('', (req, res)=>{
-    res.send("Hi this my first page..");
+    res.send("Hi this my first page...");
 });
 
 app.listen(port, () => {

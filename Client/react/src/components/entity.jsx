@@ -5,7 +5,7 @@ function Funny(){
         <div>
         {
             data.map((item, i)=>{
-                console.log(item)
+                // console.log(item)
                 return(
                     <div key={i}>
                         <h4>{item.name}</h4>
@@ -17,7 +17,6 @@ function Funny(){
             })
         }
         </div>
-
         </>
     )
 

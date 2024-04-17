@@ -1,22 +1,19 @@
 const express = require('express');
-const userDetails = require('./models/models'); // Correct import path
-const { get } = require('mongoose');
+const userDetails = require('./models/models'); 
+const {get} = require('mongoose');
 
-const getRouter = express.Router(); // Change variable name for clarity
+const getRouter = express.Router();
 
 getRouter.get('/GET', async (req, res) => {
     try {
         const details = await userDetails.find();
-        
-        // Log details to the console for debugging
+
         console.log('Retrieved details:', details);
 
-        // Check if details array is empty
         if (details.length === 0) {
             return res.status(404).json({ message: 'No details found' });
         }
 
-        // Send details as JSON response
         res.status(200).json(details);
     } catch (err) {
         console.error(err, 'GET error');
@@ -43,6 +40,7 @@ getRouter.post('/POST', async (req, res)=>{
         console.error(err, "Post error")
     }
 })
+
 getRouter.patch('/PATCH/:userid', async (req,res)=>{
     const {userid} =  req.params;
     const updates = req.body;

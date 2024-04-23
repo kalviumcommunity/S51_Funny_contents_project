@@ -1,0 +1,46 @@
+.buttons{
+    display: flex;
+    background-color: pink;
+    gap: 100px;
+    justify-content: end;
+    padding: 30px;
+}
+
+  
+.buttons h2 {
+position: relative;
+padding: 5px;
+border-radius: 10px;
+color: rgb(181, 102, 255);
+
+}
+
+.buttons h2::before {
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+width: 0;
+height: 3px;
+background-color: rgb(255, 255, 255); 
+transition:0.5s ; 
+}
+
+.buttons h2:hover::before {
+width: 100%;
+}
+
+.nav_container{
+    position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.logo{
+    position: absolute;
+    width: 300px;
+    top: 0%;
+    left: 8%;
+}

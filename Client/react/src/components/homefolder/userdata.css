@@ -1,0 +1,62 @@
+.user_container{
+  /* margin-top: 8%; */
+  width: 37%;
+  margin: 8% auto auto auto;
+}
+
+.user_container h1{
+  font-size: 50px;
+  color: violet;
+  margin-left: 15%
+}
+
+.userandcontent{
+   margin-top: 5%;
+   border: 3px solid;
+   padding: 5%;
+}
+
+.image_container img{
+  margin: 5px auto auto auto;
+  width: 100%;
+}
+
+.user img{
+  width: 5%;
+  margin: 0%;
+  padding: 0%;
+}
+
+.user{
+  display: flex;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.popup{
+  width: fit-content;
+  padding: 1%;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  margin: 1%;
+}
+
+.like_button{
+  margin-right:0px;
+}
+
+.fa-heart {
+  color: #ccc; 
+  font-size:35px ;
+}
+
+.fa-heart.fas {
+  color: red;
+  font-size: 35px; 
+} 
+
+
+.profile_img{
+  font-size: 25px;
+  /* width: 20px; */
+}

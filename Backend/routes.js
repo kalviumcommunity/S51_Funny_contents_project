@@ -24,7 +24,6 @@ getRouter.get("/GET", async (req, res) => {
 getRouter.post("/POST", async (req, res) => {
   try {
     const { name, country, age, content } = req.body;
-    console.log(req.body);
     const newUser = new userDetails({
       name,
       country,
@@ -34,7 +33,7 @@ getRouter.post("/POST", async (req, res) => {
     await newUser.save();
     res.status(200).json({ "Successfully added new user": newUser });
   } catch (err) {
-    console.error(err, "Post error");
+    console.error(err, "POST error");
   }
 });
 
@@ -56,7 +55,7 @@ getRouter.patch("/PATCH/:id", async (req, res) => {
 
     res.status(200).json({ message: "Successfully updated user", updatedUser });
   } catch (err) {
-    console.error(err, "patch error");
+    console.error(err, "PATCH error");
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -75,7 +74,7 @@ getRouter.delete("/DELETE/:id", async (req, res) => {
     console.log(deleteuser)
     
   } catch (err) {
-    console.error(err, "delete error");
+    console.error(err, "DELETE error");
   }
 });
 

@@ -7,8 +7,6 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
-connectDB();
-
 // Use middleware to parse JSON
 app.use(express.json());
 
@@ -31,10 +29,16 @@ app.use((req, res) => {
 
 const port = 3000;
 
-app.listen(port, () => {
-    console.log(`🚀 Server running on http://localhost:${port}`);
-});
+const starter = async() => {
+    try {
+        await connectDB()
+        app.listen(port, () => {
+            console.log(`🚀 Server running on http://localhost:${port}`);
+        });
+        
+    } catch (error) {
+        console.log(error.message)        
+    }
+}
 
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
-});
+starter()

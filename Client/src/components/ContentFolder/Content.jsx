@@ -60,6 +60,7 @@ const UserData = () => {
       fetchData()
     }catch(error){
       console.log(error.message)
+      toast.error("Delete Unsuccessfull")
     }
   }
 

@@ -64,7 +64,6 @@ const UserData = () => {
     }
   }
 
-
   const handleUpdate = () => {
     navigate("/update")
    };

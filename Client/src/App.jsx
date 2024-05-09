@@ -8,7 +8,7 @@ import About from './components/about/about'
 import UserData from './components/ContentFolder/Content'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import Update from './components/Updatefolder/Update'
+import Update from './components/Updatefolder/Update'
 
 function App() {
 
@@ -19,7 +19,7 @@ function App() {
       <Route path="/" element={<UserData/>} />
       <Route path="/upload" element={<Upload />}/>
       <Route path="/about" element={<About/>}/>
-      {/* <Route path="/update/:id" element={<Update/>}/> */}
+      <Route path="/update/:id" element={<Update/>}/>
     </Routes>
     <ToastContainer
         position="top-center"

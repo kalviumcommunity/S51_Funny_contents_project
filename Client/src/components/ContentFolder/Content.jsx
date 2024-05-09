@@ -100,7 +100,7 @@ const UserData = () => {
             </div>
 
             <div>
-              <button className="delete" onClick={() => {handleDelete(data._id);}}>Delete</button>
+              <button className="delete" onClick={() => handleDelete(data._id)}>Delete</button>
               <NavLink to={`/update/${data._id}`}>
                 <button className="update" onClick={() => {handleUpdate(data._id);}}>Update</button>
               </NavLink>

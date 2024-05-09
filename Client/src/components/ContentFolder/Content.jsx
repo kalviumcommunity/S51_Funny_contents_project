@@ -45,28 +45,29 @@ const UserData = () => {
     setSelectedUser((prevUser) => (prevUser === userData ? null : userData));
   };
 
-  // const handleLikeClick = (contentItem) => {
-  //   setUser((prevUser) =>
-  //     prevUser.map((item) =>
-  //       item === contentItem ? { ...item, liked: !item.liked } : item
-  //     )
-  //   );
-  // };
+  const handleLikeClick = (contentItem) => {
+    setUser((prevUser) =>
+      prevUser.map((item) =>
+        item === contentItem ? { ...item, liked: !item.liked } : item
+      )
+    );
+  };
 
-  // const handleDelete = async(id)=>{
-  //   try{
-  //     await axios.delete(`http://localhost:3000/DELETE/${id}`);
-  //     toast.success("Meme deleted")
-  //     fetchData()
-  //   }catch(error){
-  //     console.log(error.message)
-  //   }
-  // }
+  const handleDelete = async(id)=>{
+    try{
+      await axios.delete(`http://localhost:3000/DELETE/${id}`);
+      toast.success("Meme deleted")
+      fetchData()
+    }catch(error){
+      console.log(error.message)
+      toast.error("Delete Unsuccessfull")
+    }
+  }
 
 
-  // const handleUpdate = () => {
-  //   navigate("/update")
-  //  };
+  const handleUpdate = () => {
+    navigate("/update")
+   };
 
   return (
     <div className="user_container">
@@ -86,7 +87,7 @@ const UserData = () => {
             <div className="popup">
               <p>Age: {data.age}</p>
               <p>Country: {data.country}</p>
-              <p>Link:{data.content}</p>
+              {/* <p>Link:{data.content}</p> */}
             </div>
           )}
 
@@ -94,7 +95,7 @@ const UserData = () => {
               <img className="image" src={data.content} alt="Users content" />
           </div>
 
-          {/* <div className="like_button_delete_update " >
+          <div className="like_button_delete_update " >
             <div onClick={() => handleLikeClick(data)}>
             <i className={`fa${data.liked ? "s" : "r"} fa-heart`} />
             </div>
@@ -106,7 +107,7 @@ const UserData = () => {
               </NavLink>
             </div>
 
-          </div> */}
+          </div>
 
         </div>
       ))}

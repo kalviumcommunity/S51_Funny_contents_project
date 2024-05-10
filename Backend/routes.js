@@ -49,7 +49,7 @@ getRouter.patch("/PATCH/:id", async (req, res) => {
   try {
     const {error, value} = PostAndUpdateValidator(req.body)
     if (error){
-      return res.status(400).json(error.detaile)
+      return res.status(400).json(error.details)
     }
     else{
       const {id} = req.params;

@@ -15,7 +15,7 @@ const UserData = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/GET");
+      const response = await axios.get("https://s51-funny-contents-project-kv0x.onrender.com/GET");
       const userData = response.data.map((item) => ({
         ...item,
         liked: false,
@@ -55,7 +55,7 @@ const UserData = () => {
 
   const handleDelete = async(id)=>{
     try{
-      await axios.delete(`http://localhost:3000/DELETE/${id}`);
+      await axios.delete(`https://s51-funny-contents-project-kv0x.onrender.com/DELETE/${id}`);
       toast.success("Meme deleted")
       fetchData()
     }catch(error){

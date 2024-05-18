@@ -17,7 +17,7 @@ const UserData = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://s51-funny-contents-project-7.onrender.com/GET");
+      const response = await axios.get("https://s51-funny-contents-project-3.onrender.com/GET");
       const userData = response.data.map((item) => ({
         ...item,
         liked: false,

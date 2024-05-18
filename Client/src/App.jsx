@@ -6,6 +6,9 @@ import Navbar from './components/Navbar/Navbar'
 import Upload from './components/UploadData/Upload'
 import About from './components/about/about'
 import UserData from './components/ContentFolder/Content'
+import Login from './components/Loginfolder/Login'
+import Signup from './components/Signupfolder/Signup'
+import Logout from './components/Logoutfolder/Logout'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Update from './components/Updatefolder/Update'
@@ -20,6 +23,9 @@ function App() {
       <Route path="/upload" element={<Upload />}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/update/:id" element={<Update/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path = "/signup" element={<Signup/>}/>
+      <Route path='/logout' element={<Logout/>}/>
     </Routes>
     <ToastContainer
         position="top-center"

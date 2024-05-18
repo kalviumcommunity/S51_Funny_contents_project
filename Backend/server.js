@@ -23,9 +23,9 @@ app.get('', (req, res) => {
 });
 
 // 404 route
-app.use((req, res) => {
-    res.status(404).send('404 Not found...');
-});
+// app.use((req, res) => {
+//     res.status(404).send('404 Not found...');
+// });
 
 const port = 3000;
 

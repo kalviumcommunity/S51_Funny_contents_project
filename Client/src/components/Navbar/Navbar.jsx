@@ -13,6 +13,9 @@ const Navbar = () => {
         <NavLink to="/upload" style={{ textDecoration: 'none' }} ><h2>Upload <MdOutlineFileUpload className='upload_icon'/></h2></NavLink> 
         <NavLink to="/" style={{ textDecoration: 'none' }} ><h2><IoHome className='home_icon'/>Home</h2></NavLink>       
         <NavLink to="/About" style={{ textDecoration: 'none' }} ><h2>About</h2></NavLink>
+        <NavLink to="/signup"style={{ textDecoration: 'none' }} ><h2>Sign up</h2></NavLink>
+        <NavLink to="/login"style={{ textDecoration: 'none' }} ><h2>Login</h2></NavLink>
+        <NavLink to='/logout' style={{ textDecoration: 'none' }} ><h2>Logout</h2></NavLink>
       </div>
     </div>
   );

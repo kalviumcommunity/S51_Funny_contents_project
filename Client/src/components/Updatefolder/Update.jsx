@@ -14,7 +14,7 @@ const Update = () => {
 
     const onSubmit = async(data) => {
         try{
-           await axios.patch(`https://s51-funny-contents-project-kv0x.onrender.com/PATCH/${id}`, data)
+           await axios.patch(`https://s51-funny-contents-project-7.onrender.com/PATCH/${id}`, data)
            toast.success("Meme updated")
             console.log(data);
             navigate('/')

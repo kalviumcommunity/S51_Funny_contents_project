@@ -7,15 +7,17 @@ import { SlArrowUp } from "react-icons/sl";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import Cookies from 'js-cookie' 
 
 const UserData = () => {
   const [user, setUser] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const navigate = useNavigate()
+  const username = Cookies.get("name")
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://s51-funny-contents-project-kv0x.onrender.com/GET");
+      const response = await axios.get("https://s51-funny-contents-project-7.onrender.com/GET");
       const userData = response.data.map((item) => ({
         ...item,
         liked: false,
@@ -55,7 +57,7 @@ const UserData = () => {
 
   const handleDelete = async(id)=>{
     try{
-      await axios.delete(`https://s51-funny-contents-project-kv0x.onrender.com/DELETE/${id}`);
+      await axios.delete(`https://s51-funny-contents-project-7.onrender.com/DELETE/${id}`);
       toast.success("Meme deleted")
       fetchData()
     }catch(error){
@@ -71,6 +73,7 @@ const UserData = () => {
   return (
     <div className="user_container">
       <h1>Memes of the day</h1>
+      {username && <h3 style={{ color: "white" }}>{username}</h3>}
       <button className="arrow_up" onClick={scrollUp}>
         <SlArrowUp />
       </button>
@@ -86,7 +89,6 @@ const UserData = () => {
             <div className="popup">
               <p>Age: {data.age}</p>
               <p>Country: {data.country}</p>
-              {/* <p>Link:{data.content}</p> */}
             </div>
           )}
 

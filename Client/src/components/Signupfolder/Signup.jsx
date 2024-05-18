@@ -20,7 +20,7 @@ const Signup = () => {
   const onSubmit = async (data) => {
     try {
       delete data["confirm_password"]
-      const response = await axios.post('http://localhost:3000/SIGNUP',data);
+      const response = await axios.post('https://s51-funny-contents-project-7.onrender.com/SIGNUP',data);
       console.log(response.data)
 
       // COOKIES

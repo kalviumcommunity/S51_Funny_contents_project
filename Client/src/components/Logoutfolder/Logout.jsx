@@ -18,11 +18,13 @@ const Logout = () => {
     const onSubmit = async (data) => {
         try {
             const { username, password } = data;
-            const response = await axios.delete('http://localhost:3000/LOGOUT', { data: { username, password } });
+            const response = await axios.delete('https://s51-funny-contents-project-7.onrender.com/LOGOUT', { data: { username, password } });
             console.log(response.data)
             toast.success("Logout successful and user deleted");
+
             Cookies.remove("name");
             Cookies.remove("password");
+            
             navigate('/');
         } catch (error) {
             toast.error("Logout Failed");
@@ -31,7 +33,7 @@ const Logout = () => {
     };
 
     return (
-        <div>
+        <div className='logout_form_container'>
             <h1>Logout form</h1>
             <br />
             <form onSubmit={handleSubmit(onSubmit)} className='logout_form'>
@@ -65,7 +67,7 @@ const Logout = () => {
                 />
                 {errors.password && <p>{errors.password.message}</p>}
 
-                <button type="submit" className="login_submit">
+                <button type="submit" className="logout_submit">
                     Logout
                 </button>
             </form>

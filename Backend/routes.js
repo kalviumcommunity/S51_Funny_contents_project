@@ -1,5 +1,6 @@
 const express = require("express");
 const users = require("./models/m2");
+const userDetails = require("./models/models")
 const validators = require("./validator");
 const { sign } = require("crypto");
 const getRouter = express.Router();

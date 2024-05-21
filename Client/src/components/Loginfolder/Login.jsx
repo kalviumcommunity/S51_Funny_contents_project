@@ -18,12 +18,17 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       console.log(data);
-      const response = await axios.post("https://s51-funny-contents-project-7.onrender.com/LOGIN", data);
+      const response = await axios.post("http://localhost:3000/LOGIN", data);
       console.log(response.data);
+      // console.log(response.data.username)
 
       // Cookies
-      Cookies.set()
-      toast.success(`Logged in as ${Cookies.get('name')} `);
+      Cookies.set('name', response.data.username)
+      Cookies.set("authToken", response.data.authToken)
+      const authToken = Cookies.get('authToken')
+      console.log(authToken)
+
+      toast.success(`Logged in as ${response.data.username} `);
       navigate('/');
 
     } catch (error) {

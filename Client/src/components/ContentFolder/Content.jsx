@@ -7,13 +7,14 @@ import { SlArrowUp } from "react-icons/sl";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import Cookies from 'js-cookie' 
+import Cookies from 'js-cookie';
 
 const UserData = () => {
   const [user, setUser] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const navigate = useNavigate()
-  const username = Cookies.get("name")
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const username = Cookies.get("name");
 
   const fetchData = async () => {
     try {
@@ -24,6 +25,7 @@ const UserData = () => {
       }));
       userData.reverse();
       setUser(userData);
+      setLoading(false); 
       console.log("Fetched data:", userData);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -55,20 +57,20 @@ const UserData = () => {
     );
   };
 
-  const handleDelete = async(id)=>{
-    try{
+  const handleDelete = async (id) => {
+    try {
       await axios.delete(`https://s51-funny-contents-project-7.onrender.com/DELETE/${id}`);
-      toast.success("Meme deleted")
-      fetchData()
-    }catch(error){
-      console.log(error.message)
-      toast.error("Delete Unsuccessfull")
+      toast.success("Meme deleted");
+      fetchData();
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Delete Unsuccessful");
     }
-  }
+  };
 
   const handleUpdate = () => {
-    navigate("/update")
-   };
+    navigate("/update");
+  };
 
   return (
     <div className="user_container">
@@ -78,40 +80,44 @@ const UserData = () => {
         <SlArrowUp />
       </button>
 
-      {user.map((data, ind) => (
-        <div key={ind} className="userandcontent">
-          <div className="user" onClick={() => handleUserClick(data)}>
-            <CgProfile className="profile_img" />
-            <h3> | {data.name} |</h3>
-          </div>
-
-          {selectedUser && selectedUser === data && (
-            <div className="popup">
-              <p>Age: {data.age}</p>
-              <p>Country: {data.country}</p>
+      {loading ? ( 
+        <h1 className="loading">Loading...</h1>
+      ) : (
+        user.map((data, ind) => (
+          <div key={ind} className="userandcontent">
+            <div className="user" onClick={() => handleUserClick(data)}>
+              <CgProfile className="profile_img" />
+              <h3> | {data.name} |</h3>
             </div>
-          )}
 
-          <div className="image_container">
+            {selectedUser && selectedUser === data && (
+              <div className="popup">
+                <p>Age: {data.age}</p>
+                <p>Country: {data.country}</p>
+              </div>
+            )}
+
+            <div className="image_container">
               <img className="image" src={data.content} alt="Users content" />
-          </div>
-
-          <div className="like_button_delete_update " >
-            <div onClick={() => handleLikeClick(data)}>
-            <i className={`fa${data.liked ? "s" : "r"} fa-heart`} />
             </div>
 
-            <div>
-              <button className="delete" onClick={() => handleDelete(data._id)}>Delete</button>
-              <NavLink to={`/update/${data._id}`}>
-                <button className="update" onClick={() => {handleUpdate(data._id);}}>Update</button>
-              </NavLink>
+            <div className="like_button_delete_update">
+              <div onClick={() => handleLikeClick(data)}>
+                <i className={`fa${data.liked ? "s" : "r"} fa-heart`} />
+              </div>
+
+              <div>
+                <button className="delete" onClick={() => handleDelete(data._id)}>Delete</button>
+                <NavLink to={`/update/${data._id}`}>
+                  <button className="update" onClick={() => { handleUpdate(data._id); }}>Update</button>
+                </NavLink>
+              </div>
+
             </div>
 
           </div>
-
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

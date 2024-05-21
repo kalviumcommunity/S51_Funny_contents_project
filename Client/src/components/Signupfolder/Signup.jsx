@@ -20,12 +20,11 @@ const Signup = () => {
   const onSubmit = async (data) => {
     try {
       delete data["confirm_password"]
-      const response = await axios.post('https://s51-funny-contents-project-7.onrender.com/SIGNUP',data);
+      const response = await axios.post('http://localhost:3000/SIGNUP',data);
       console.log(response.data)
 
       // COOKIES
-      Cookies.set("name", data.username)
-      Cookies.set("password", data.password)
+      Cookies.set("name", data.username, {expires:365})
 
       toast.success(`Signed in as ${Cookies.get('name')} `);
       console.log(data, "data");

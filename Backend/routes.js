@@ -4,6 +4,12 @@ const userDetails = require("./models/models")
 const validators = require("./validator");
 const { sign } = require("crypto");
 const getRouter = express.Router();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
+require('dotenv').config()
+
+
+const JWT_SECRET = process.env.SECRET_ACCESS_TOKEN
 
 //  fetch DATA
 getRouter.get("/GET", async (req, res) => {
@@ -52,13 +58,15 @@ getRouter.post("/SIGNUP", async (req, res) => {
     const { error, value } = validators.AuthValidator(req.body);
     if (error) {
       res.status(400).json(error.details);
-    } else {
+    }else {
       const { username, country, age, password } = req.body;
+      const salt = await bcrypt.genSalt(10); // Await the salt generation
+      const hashedPassword = await bcrypt.hash(password, salt); // Await the password hashing
       const newUser = new users({
         username,
         country,
         age,
-        password,
+        password: hashedPassword,
       });
       await newUser.save();
       res.status(200).json({ newUser });
@@ -76,20 +84,30 @@ getRouter.post("/LOGIN", async (req, res) => {
     console.log(req.body);
     const signedUpUser = await users.findOne({ username });
     console.log(username, password, "password");
-    
-    if (!signedUpUser || signedUpUser.password !== password) {
-      return res.status(401).json({ message: "Invalid username/password" });
-    }
-    
-    res.status(200).json({ message: "Login successful", user: signedUpUser });
-    console.log("Login successful");
+    console.log(signedUpUser)
+    if (!signedUpUser) {
+      return res.status(400).json({ message: 'Username not found' });
+  }
+
+  const validPassword = bcrypt.compare(password, signedUpUser.password);
+  console.log(validPassword)
+  if (!validPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
+  }
+
+  const tokenPayload = { id: signedUpUser._id, username: signedUpUser.username };
+  const authToken = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '1h' });
+
+  res.json({authToken, username})
+
   } catch (error) {
     console.error("LOGIN error:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-// logout USER
+
+// Delete USER ACCOUNT
 getRouter.delete("/LOGOUT", async (req, res) => {
   try {
     const { username, password } = req.body;

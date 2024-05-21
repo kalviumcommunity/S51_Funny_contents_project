@@ -15,6 +15,12 @@
   margin-left:60% ;
 }
 
+.loading{
+  color: white;
+  margin: 70px auto auto auto;
+  font-size: 100px;
+}
+
 .user_container h1{
   font-size: 50px;
   color: violet;

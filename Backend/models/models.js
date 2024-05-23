@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
 
-const userSchema = new mongoose.Schema({
-    name:String,
-    country:String,
+const contentSchema = new mongoose.Schema({
+    content:String,
+    userID: String,
+    username:String,
     age:Number,
-    content:String
+    country:String
 })
 
-const userDetails = mongoose.model('userdetails', userSchema);
+const contents = mongoose.model('contents', contentSchema);
 
-module.exports = userDetails;
+module.exports = contents;

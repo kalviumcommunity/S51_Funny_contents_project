@@ -4,33 +4,45 @@ import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { CgProfile } from "react-icons/cg";
 import { SlArrowUp } from "react-icons/sl";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const UserData = () => {
   const [user, setUser] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [popup, setPopup] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
   const navigate = useNavigate();
-  const username = Cookies.get("name");
+  const userID = Cookies.get("userID");
+
+
+  const displayFilteredData = filter === "all" ? user : user.filter(ele => ele.user.username === filter)
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://s51-funny-contents-project-3.onrender.com/GET");
-      const userData = response.data.map((item) => ({
+      const response = await axios.get("http://localhost:3000/GET");
+      let userData = response.data.map((item) => ({
         ...item,
         liked: false,
-      }));
+      })
+    );
       userData.reverse();
+  
+      userData = await Promise.all(userData.map(async (item) => {
+        const res = await axios.get(`http://localhost:3000/getUser/${item.userID}`);
+        return { ...item, user: res.data };
+      }));
+  
       setUser(userData);
-      setLoading(false); 
+      setLoading(false);
       console.log("Fetched data:", userData);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
+  
 
   const scrollUp = () => {
     window.scrollTo({
@@ -45,9 +57,15 @@ const UserData = () => {
 
   console.log("User state:", user);
 
-  const handleUserClick = (userData) => {
-    setSelectedUser((prevUser) => (prevUser === userData ? null : userData));
-  };
+  const togglePopup = ()=>{
+    setPopup(!popup);
+
+  }
+
+  const handleFilter = (e)=>{
+    setFilter(e.target.value)
+
+  }
 
   const handleLikeClick = (contentItem) => {
     setUser((prevUser) =>
@@ -59,7 +77,7 @@ const UserData = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://s51-funny-contents-project-7.onrender.com/DELETE/${id}`);
+      await axios.delete(`http://localhost:3000/DELETE/${id}`);
       toast.success("Meme deleted");
       fetchData();
     } catch (error) {
@@ -72,30 +90,43 @@ const UserData = () => {
     navigate("/update");
   };
 
+  const uniqueUsernames = [...new Set(user.map(data => data.user.username))];
+
   return (
     <div className="user_container">
       <h1>Memes of the day</h1>
-      {username && <h3 style={{ color: "white" }}>{username}</h3>}
+
+      <select name="search by names" id="" onChange={handleFilter} className="filter">
+        <option value="all">all</option>
+        {uniqueUsernames.map((data, index) => (
+          <option key={index} value={data}>
+            {data}
+          </option>
+        ))}
+      </select>
+
       <button className="arrow_up" onClick={scrollUp}>
         <SlArrowUp />
       </button>
 
-      {loading ? ( 
+      {loading ? (
         <h1 className="loading">Loading...</h1>
       ) : (
-        user.map((data, ind) => (
+        
+          displayFilteredData.map((data, ind) => (
+      
           <div key={ind} className="userandcontent">
-            <div className="user" onClick={() => handleUserClick(data)}>
-              <CgProfile className="profile_img" />
-              <h3> | {data.name} |</h3>
+            <div>
+              <h2 onClick={togglePopup} className="username" style={{ color: "color", display:"flex" , alignItems:"center", gap:"5px", cursor:"pointer" }}>
+                <CgProfile/>{data.user.username}
+              </h2>
+              {popup && (
+                <div className="popup">
+                  <h2>{data.user.country}</h2>
+                  <h2>{data.user.age}</h2>
+                </div>
+              )}
             </div>
-
-            {selectedUser && selectedUser === data && (
-              <div className="popup">
-                <p>Age: {data.age}</p>
-                <p>Country: {data.country}</p>
-              </div>
-            )}
 
             <div className="image_container">
               <img className="image" src={data.content} alt="Users content" />
@@ -106,15 +137,27 @@ const UserData = () => {
                 <i className={`fa${data.liked ? "s" : "r"} fa-heart`} />
               </div>
 
-              <div>
-                <button className="delete" onClick={() => handleDelete(data._id)}>Delete</button>
-                <NavLink to={`/update/${data._id}`}>
-                  <button className="update" onClick={() => { handleUpdate(data._id); }}>Update</button>
-                </NavLink>
-              </div>
-
+              {userID === data.userID && (
+                <div>
+                  <button
+                    className="delete"
+                    onClick={() => handleDelete(data._id)}
+                  >
+                    Delete
+                  </button>
+                  <NavLink to={`/update/${data._id}`}>
+                    <button
+                      className="update"
+                      onClick={() => {
+                        handleUpdate(data._id);
+                      }}
+                    >
+                      Update
+                    </button>
+                  </NavLink>
+                </div>
+              )}
             </div>
-
           </div>
         ))
       )}

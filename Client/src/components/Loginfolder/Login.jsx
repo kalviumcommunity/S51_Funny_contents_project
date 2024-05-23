@@ -19,12 +19,13 @@ const Login = () => {
     try {
       console.log(data);
       const response = await axios.post("http://localhost:3000/LOGIN", data);
-      console.log(response.data);
+      console.log(response.data._id);
       // console.log(response.data.username)
-
       // Cookies
       Cookies.set('name', response.data.username)
       Cookies.set("authToken", response.data.authToken)
+      Cookies.set("userID", response.data._id)
+      console.log(response.data)
       const authToken = Cookies.get('authToken')
       console.log(authToken)
 

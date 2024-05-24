@@ -61,8 +61,17 @@
   gap: 10px;
 }
 
+.filter{
+  /* margin-top: 20px; */
+  width: 90px;
+  margin: 30px auto auto auto;
+  font-size: 20px;
+
+}
+
+
 .popup{
-  width: fit-content;
+  /* width: fit-content; */
   padding: 1%;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 5px;

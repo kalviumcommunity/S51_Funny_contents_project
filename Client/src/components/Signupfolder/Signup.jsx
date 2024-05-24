@@ -16,7 +16,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const password = watch("password");
-
+  
   const onSubmit = async (data) => {
     try {
       delete data["confirm_password"]
@@ -25,6 +25,9 @@ const Signup = () => {
 
       // COOKIES
       Cookies.set("name", data.username, {expires:365})
+      Cookies.set("userID", response.data.newUser._id)
+      Cookies.set("age", response.data.age)
+      Cookies.set("country", response.data.country)
 
       toast.success(`Signed in as ${Cookies.get('name')} `);
       console.log(data, "data");

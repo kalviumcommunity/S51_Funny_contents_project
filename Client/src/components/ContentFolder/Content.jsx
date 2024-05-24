@@ -17,24 +17,22 @@ const UserData = () => {
   const navigate = useNavigate();
   const userID = Cookies.get("userID");
 
-
-  const displayFilteredData = filter === "all" ? user : user.filter(ele => ele.user.username === filter)
+  const displayFilteredData = filter === "all" ? user : user.filter(ele => ele.user?.username === filter);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/GET");
+      const response = await axios.get("https://s51-funny-contents-project-3.onrender.com/GET");
       let userData = response.data.map((item) => ({
         ...item,
         liked: false,
-      })
-    );
+      }));
       userData.reverse();
-  
+
       userData = await Promise.all(userData.map(async (item) => {
-        const res = await axios.get(`http://localhost:3000/getUser/${item.userID}`);
+        const res = await axios.get(`https://s51-funny-contents-project-3.onrender.com/getUser/${item.userID}`);
         return { ...item, user: res.data };
       }));
-  
+
       setUser(userData);
       setLoading(false);
       console.log("Fetched data:", userData);
@@ -42,7 +40,6 @@ const UserData = () => {
       console.log("Error fetching data:", error);
     }
   };
-  
 
   const scrollUp = () => {
     window.scrollTo({
@@ -57,15 +54,13 @@ const UserData = () => {
 
   console.log("User state:", user);
 
-  const togglePopup = ()=>{
+  const togglePopup = () => {
     setPopup(!popup);
+  };
 
-  }
-
-  const handleFilter = (e)=>{
-    setFilter(e.target.value)
-
-  }
+  const handleFilter = (e) => {
+    setFilter(e.target.value);
+  };
 
   const handleLikeClick = (contentItem) => {
     setUser((prevUser) =>
@@ -77,7 +72,7 @@ const UserData = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/DELETE/${id}`);
+      await axios.delete(`https://s51-funny-contents-project-3.onrender.com/DELETE/${id}`);
       toast.success("Meme deleted");
       fetchData();
     } catch (error) {
@@ -90,7 +85,7 @@ const UserData = () => {
     navigate("/update");
   };
 
-  const uniqueUsernames = [...new Set(user.map(data => data.user.username))];
+  const uniqueUsernames = [...new Set(user.map(data => data.user?.username))];
 
   return (
     <div className="user_container">
@@ -98,9 +93,9 @@ const UserData = () => {
 
       <select name="search by names" id="" onChange={handleFilter} className="filter">
         <option value="all">all</option>
-        {uniqueUsernames.map((data, index) => (
-          <option key={index} value={data}>
-            {data}
+        {uniqueUsernames.map((username, index) => (
+          username && <option key={index} value={username}>
+            {username}
           </option>
         ))}
       </select>
@@ -112,18 +107,16 @@ const UserData = () => {
       {loading ? (
         <h1 className="loading">Loading...</h1>
       ) : (
-        
-          displayFilteredData.map((data, ind) => (
-      
+        displayFilteredData.map((data, ind) => (
           <div key={ind} className="userandcontent">
             <div>
-              <h2 onClick={togglePopup} className="username" style={{ color: "color", display:"flex" , alignItems:"center", gap:"5px", cursor:"pointer" }}>
-                <CgProfile/>{data.user.username}
+              <h2 onClick={togglePopup} className="username" style={{ display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}>
+                <CgProfile />{data.user?.username}
               </h2>
               {popup && (
                 <div className="popup">
-                  <h2>{data.user.country}</h2>
-                  <h2>{data.user.age}</h2>
+                  <h2>{data.user?.country}</h2>
+                  <h2>{data.user?.age}</h2>
                 </div>
               )}
             </div>

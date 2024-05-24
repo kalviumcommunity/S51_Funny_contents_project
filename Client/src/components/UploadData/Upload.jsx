@@ -15,7 +15,7 @@ const Upload = () => {
     const onSubmit = async(data) => {
         try{
       data.userID = Cookies.get("userID")
-           await axios.post("http://localhost:3000/POST", data)
+           await axios.post("https://s51-funny-contents-project-3.onrender.com/POST", data)
            toast.success("Meme uploaded")
             console.log(data);
             navigate('/')

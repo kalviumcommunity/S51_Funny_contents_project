@@ -15,7 +15,7 @@ const Update = () => {
     const onSubmit = async(data) => {
         data.userID = Cookies.get("userID")
         try{
-           await axios.patch(`http://localhost:3000/PATCH/${id}`, data)
+           await axios.patch(`https://s51-funny-contents-project-3.onrender.com/PATCH/${id}`, data)
            toast.success("Meme updated")
             console.log(data);
             navigate('/')

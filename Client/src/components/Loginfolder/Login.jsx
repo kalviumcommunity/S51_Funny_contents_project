@@ -18,7 +18,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       console.log(data);
-      const response = await axios.post("http://localhost:3000/LOGIN", data);
+      const response = await axios.post("https://s51-funny-contents-project-3.onrender.com/LOGIN", data);
       console.log(response.data._id);
       // console.log(response.data.username)
       // Cookies

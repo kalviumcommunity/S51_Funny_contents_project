@@ -7,7 +7,7 @@ const UserData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/GET");
+        const response = await axios.get("https://s51-funny-contents-project-3.onrender.com/GET");
         setUser(response.data);
         console.log("Fetched data:", response.data);
       } catch (error) {
